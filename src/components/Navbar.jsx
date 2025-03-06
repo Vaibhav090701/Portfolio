@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-scroll'
 import { FiSun, FiMoon, FiMenu, FiX, FiDownload } from 'react-icons/fi'
+import resume from '../assets/resume.pdf'
 
 const Navbar = ({ darkMode, toggleDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -109,7 +110,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             </Link>
           ))}
           <a
-            href="/resume.pdf"
+            href={resume}
             className="flex items-center space-x-1 px-3 py-2 text-base font-medium hover:text-primary transition-colors"
             download
           >

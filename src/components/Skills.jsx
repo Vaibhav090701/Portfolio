@@ -11,17 +11,50 @@ const Skills = () => {
     threshold: 0.1
   })
 
-  // Animation Variants for Fade and Hover
-  const fadeIn = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+  // Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
   }
 
-  const skillHover = {
-    hover: { scale: 1.2, rotate: 10, boxShadow: '0 15px 40px rgba(0, 255, 255, 0.3)', cursor: 'pointer' }
+  const categoryVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 40,
+      rotateX: -15
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 15
+      }
+    }
   }
 
-  // Categories with Skills
+  const skillVariants = {
+    hidden: { scale: 0.9, opacity: 0 },
+    visible: { 
+      scale: 1,
+      opacity: 1,
+      transition: { type: 'spring', stiffness: 200 }
+    },
+    hover: {
+      y: -5,
+      rotateZ: 2,
+      boxShadow: '0 10px 20px -5px rgba(var(--color-primary), 0.2)'
+    }
+  }
+
   const categories = [
     {
       name: 'Backend',
@@ -52,54 +85,53 @@ const Skills = () => {
     }
   ]
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3
-      }
-    }
-  }
-
   return (
-    <section id="skills" className="py-20 bg-gradient-to-br from-[#111] via-[#1f1f1f] to-[#222] text-white dark:bg-[#111]">
+    <section id="skills" className="py-20 bg-white dark:bg-dark">
       <div className="section-container" ref={ref}>
         <motion.h2
-          className="section-title text-5xl font-extrabold text-center"
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={fadeIn}
+          className="section-title"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
         >
-          My Skills
+          Technical Expertise
         </motion.h2>
-        
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10"
-          variants={staggerContainer}
+
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+          variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
           {categories.map((category, index) => (
             <motion.div
               key={index}
-              className="flex flex-col items-center p-8 rounded-xl bg-gradient-to-br from-[#303030] via-[#444] to-[#555] shadow-lg transform hover:scale-105 transition-all"
-              variants={fadeIn}
+              className="group perspective-1000"
+              variants={categoryVariants}
+              whileHover={{ y: -10 }}
             >
-              <h3 className="text-2xl font-bold mb-6 text-center text-accent">{category.name}</h3>
-              <div className="grid grid-cols-2 gap-8">
-                {category.skills.map((skill, skillIndex) => (
-                  <motion.div
-                    key={skillIndex}
-                    className="skill-card flex flex-col items-center justify-center p-6 bg-[#333] rounded-full shadow-xl transition-all"
-                    variants={skillHover}
-                    whileHover="hover"
-                    style={{ height: '120px', width: '120px' }}
-                  >
-                    <div className="icon mb-3 text-3xl text-accent">{skill.icon}</div>
-                    <span className="text-sm font-medium">{skill.name}</span>
-                  </motion.div>
-                ))}
+              <div className="h-full p-6 bg-white dark:bg-dark-light rounded-xl shadow-sm hover:shadow-lg transition-all border border-gray-200 dark:border-gray-800">
+                <h3 className="text-xl font-semibold mb-6 text-center text-gray-800 dark:text-gray-200">
+                  {category.name}
+                </h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  {category.skills.map((skill, skillIndex) => (
+                    <motion.div
+                      key={skillIndex}
+                      className="flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 hover:border-primary transition-all"
+                      variants={skillVariants}
+                      whileHover="hover"
+                    >
+                      <div className="text-2xl mb-3 text-primary">
+                        {skill.icon}
+                      </div>
+                      <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                        {skill.name}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}
@@ -109,4 +141,4 @@ const Skills = () => {
   )
 }
 
-export default Skills;
+export default Skills

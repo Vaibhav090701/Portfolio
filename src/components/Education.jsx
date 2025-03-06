@@ -60,7 +60,7 @@ const Education = () => {
 
 
   return (
-    <section id="education" className="py-20">
+    <section id="education" className="py-10">
       <div className="section-container" ref={ref}>
         <motion.h2
           className="section-title"
